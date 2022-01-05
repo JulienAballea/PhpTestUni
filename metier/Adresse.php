@@ -1,25 +1,25 @@
 <?php
 /**
- * 
+ *
  * Classe permettant de definir une adresse
  * @author Pascal Lamy
  *
  */
 class Adresse {
-	
+
 	private int $id;
 	private int $numero;
 	private ?string $rue;
 	private ?int $codePostal;
 	private ?string $ville;
-	
-	function __construct(int $id, int $numero,string $rue,int $codePostal,string $ville) {
-            $this->id = $id;
-            $this->numero = $numero;
-            $this->rue = $rue;
-            $this->codePostal = $codePostal;
-            $this->ville = $ville;
-        }
+
+	function __construct(int $numero, string $rue, int $codePostal, string $ville)
+	{
+			$this->numero = $numero;
+			$this->rue = $rue;
+			$this->codePostal = $codePostal;
+			$this->ville = $ville;
+	}
 
         function getId() {
             return $this->id;

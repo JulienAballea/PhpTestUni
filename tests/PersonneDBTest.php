@@ -19,21 +19,21 @@ class PersonneDBTest extends TestCase {
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    
+
       /**
-       * 
+       *
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 * @coversNothing
-*/ 
+*/
 
     protected function setUp():void {
         //parametre de connexion à la bae de donnée
-     $strConnection = Constantes::TYPE.':host='.Constantes::HOST.';dbname='.Constantes::BASE; 
+     $strConnection = Constantes::TYPE.':host='.Constantes::HOST.';dbname='.Constantes::BASE;
     $arrExtraParam= array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
     $this->pdodb = new PDO($strConnection, Constantes::USER, Constantes::PASSWORD, $arrExtraParam); //Ligne 3; Instancie la connexion
     $this->pdodb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-   
+
     }
 
     /**
@@ -42,20 +42,21 @@ class PersonneDBTest extends TestCase {
      * This method is called after a test is executed.
      */
     protected function tearDown() : void{
-        
+
     }
 
     /**
      * @covers PersonneDB::ajout
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
-*/     
+*/
     public function testAjout() {
-       try{ 
+       try{
    $this->personne = new PersonneDB($this->pdodb);
-   
+
    $dt = new DateTime('1950-01-12');
-   $p = new Personne("Hollande", "Francois",$dt,"0656463524", "fhollande@free.fr", "fhollande", "monpwd");
+   $adr = new Adresse(1, "Logebegoarem", 29380, "Bannalec");
+   $p = new Personne("Hollande", "Francois",$dt,"0656463524", "fhollande@free.fr", "fhollande", "monpwd",$adr);
    $p->setPwd("monpwd");
 //insertion en bdd
 $this->personne->ajout($p);
@@ -76,13 +77,13 @@ $this->assertEquals($p->getDatenaissance()->format('Y-m-d'),$pers->getDatenaissa
     echo 'Exception recue : ',  $e->getMessage(), "\n";
 }
 
-    }  
+    }
 
   /**
    * @covers PersonneDB::suppression
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
-*/ 
+*/
     public function testSuppression() {
         try{
   $this->personne = new PersonneDB($this->pdodb);
@@ -101,7 +102,7 @@ if($pers2!=null){
         $this->assertEquals($exception,$e->getMessage());
 
     }
-        
+
     }
 
     /**
@@ -110,11 +111,12 @@ if($pers2!=null){
       /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
-*/ 
+*/
     public function testSelectionNom() {
      $this->personne = new PersonneDB($this->pdodb);
      $dt = new DateTime('1850-11-20');
- $p=new Personne("Valjean", "jean",$dt,"0712233445","jvaljean@free.fr","jvaljean","cosette");
+     $adr = new Adresse(1, "Logebegoarem", 29380, "Bannalec");
+ $p=new Personne("Valjean", "jean",$dt,"0712233445","jvaljean@free.fr","jvaljean","cosette",$adr);
  $p->setPwd("cosette");
 $this->personne->ajout($p);
 
@@ -137,7 +139,7 @@ $this->assertEquals($p->getPwd(),$pers->getPwd());
      /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
-*/ 
+*/
     public function testSelectionId() {
          $this->personne = new PersonneDB($this->pdodb);
          $p=$this->personne->selectionNom("Valjean");
@@ -149,7 +151,7 @@ $this->assertEquals($p->getDatenaissance()->format('Y-m-d'),$pers->getDatenaissa
 $this->assertEquals($p->getTelephone(),$pers->getTelephone());
 $this->assertEquals($p->getEmail(),$pers->getEmail());
 $this->assertEquals($p->getlogin(),$pers->getLogin());
-$this->assertEquals($p->getPwd(),$pers->getPwd());        
+$this->assertEquals($p->getPwd(),$pers->getPwd());
     }
 
     /**
@@ -163,7 +165,7 @@ $this->assertEquals($p->getPwd(),$pers->getPwd());
     $res=$this->personne->selectAll();
     $i=0;
    foreach ($res as $key=>$value) {
-       $i++; 
+       $i++;
 
    }
    print_r($res);
@@ -172,7 +174,7 @@ $this->assertEquals($p->getPwd(),$pers->getPwd());
       $ok=false;
     }
 $this->assertTrue($ok);
- 
+
     }
 
     /**
@@ -198,7 +200,7 @@ $this->assertEquals($tab["telephone"],$pers->getTelephone());
 $this->assertEquals(  $tab["email"],$pers->getEmail());
 $this->assertEquals(  $tab["login"],$pers->getLogin());
 $this->assertEquals(  $tab["pwd"],$pers->getPwd());
-     
+
     }
 
     /**
@@ -207,11 +209,12 @@ $this->assertEquals(  $tab["pwd"],$pers->getPwd());
 * @backupStaticAttributes disabled
 */
     public function testUpdate() {
-        
+
       $this->personne = new PersonneDB($this->pdodb);
         //insertion en bdd de l'enreg
         $dt = new DateTime('1950-01-12');
-        $p = new Personne("Hollande", "Francois",$dt,"0656463524", "fhollande@free.fr", "fhollande", "monpwd");
+        $adr = new Adresse(1, "Logebegoarem", 29380, "Bannalec");
+        $p = new Personne("Hollande", "Francois",$dt,"0656463524", "fhollande@free.fr", "fhollande", "monpwd", $adr);
         $p->setPwd("monpwd");
         $p->setId(99);
      //insertion en bdd
@@ -220,11 +223,12 @@ $this->assertEquals(  $tab["pwd"],$pers->getPwd());
 //instanciation de l'objet pour mise ajour
 
  $dt = new DateTime('1970-09-10');
-  $p=new Personne("Martin", "Eric",$dt,"0102030405","meric@orange.fr","meric","4755edd32703675c6a021322f9ca0433");
-//update pers 
+  $adr = new Adresse(1, "Logebegoarem", 29380, "Bannalec");
+  $p=new Personne("Martin", "Eric",$dt,"0102030405","meric@orange.fr","meric","4755edd32703675c6a021322f9ca0433", $adr);
+//update pers
 $lastId = $this->pdodb->lastInsertId();
 $p->setId($lastId);
-$this->personne->update($p);  
+$this->personne->update($p);
 $pers=$this->personne->selectionId($p->getId());
 $this->assertEquals($p->getId(),$pers->getId());
 $this->assertEquals($p->getNom(),$pers->getNom());
@@ -233,8 +237,31 @@ $this->assertEquals($p->getDatenaissance()->format('Y-m-d'),$pers->getDatenaissa
 $this->assertEquals($p->getTelephone(),$pers->getTelephone());
 $this->assertEquals($p->getEmail(),$pers->getEmail());
 $this->assertEquals($p->getlogin(),$pers->getLogin());
-$this->assertEquals($p->getPwd(),$pers->getPwd());      
+$this->assertEquals($p->getPwd(),$pers->getPwd());
 
     }
+    /**
+ * @covers PersonneDB::authentification
+ * @backupGlobals disabled
+ * @backupStaticAttributes disabled
+ */
+public function testAuthentification()
+{
+
+    $this->personne = new PersonneDB($this->pdodb);
+    //insertion en bdd de l'enreg
+    $dt = new DateTime('1950-01-12');
+     $adr = new Adresse(1, "Logebegoarem", 29380, "Bannalec");
+    $p = new Personne("Hollande", "Francois", $dt, "0656463524", "fhollande@free.fr", "fhollande", "monpwd", $adr);
+    $p->setPwd("monpwd");
+    $p->setId(200);
+    //insertion en bdd
+    $this->personne->ajout($p);
+
+    $lastId = $this->pdodb->lastInsertId();
+    $p->setId($lastId);
+    $pers = $this->personne->selectionId($p->getId());
+    $this->assertEquals($pers->getPwd(), $p->getPwd());
+}
 
 }
