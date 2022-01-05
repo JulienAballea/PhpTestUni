@@ -13,12 +13,12 @@ class Adresse {
 	private ?int $codePostal;
 	private ?string $ville;
 
-	function __construct(int $numero, string $rue, int $codePostal, string $ville)
+	function __construct(int $num, string $r, int $cp, string $v)
 	{
-			$this->numero = $numero;
-			$this->rue = $rue;
-			$this->codePostal = $codePostal;
-			$this->ville = $ville;
+			$this->numero = $num;
+			$this->rue = $r;
+			$this->codePostal = $cp;
+			$this->ville = $v;
 	}
 
         function getId() {

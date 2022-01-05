@@ -55,18 +55,21 @@ class AdresseDBTest extends TestCase
     {
         try {
             $this->adresse = new AdresseDB($this->pdodb);
-
-            $p = new Adresse(1, "Logebegoarem", 29380, "Bannalec");
+            echo "test echo";
+            $a = new Adresse(1, "Logebegoarem", 29380, "Bannalec");
             //insertion en bdd
-            $this->adresse->ajout($p);
-
-            $adr = $this->adresse->selectAdresse($this->pdodb->lastInsertId());
+            echo "test a". $a;
+            $this->adresse->ajout($a);
+            $lastId = $this->pdodb->lastInsertId();
+            $a->setId(intval($lastId)); echo "id adresse :". $a->getId();
+            $adr = $this->adresse->selectAdresse($a->getId());
+            echo "test adresse";
             //echo "adr bdd: $adr";
-            $this->assertEquals($p->getNumero(), $adr->getNumero());
-            $this->assertEquals($p->getRue(), $adr->getRue());
-            $this->assertEquals($p->getCodepostal(), $adr->getCodepostal());
-            $this->assertEquals($p->getVille(), $adr->getVille());
-            $this->assertEquals($p->getId(), $adr->getId());
+            $this->assertEquals($a->getNumero(), $adr->getNumero());
+            $this->assertEquals($a->getRue(), $adr->getRue());
+            $this->assertEquals($a->getCodepostal(), $adr->getCodepostal());
+            $this->assertEquals($a->getVille(), $adr->getVille());
+            $this->assertEquals($a->getId(), $adr->getId());
         } catch (Exception $e) {
             echo 'Exception recue : ',  $e->getMessage(), "\n";
         }
@@ -107,15 +110,16 @@ class AdresseDBTest extends TestCase
     public function testSelectionAdresse()
     {
         $this->adresse = new AdresseDB($this->pdodb);
-        $p = new Adresse(1, "Logebegoarem", 29380, "Bannalec");
-        $this->adresse->ajout($p);
-
-        $adr = $this->adresse->selectAdresse($this->pdodb->lastInsertId());
-        $this->assertEquals($p->getNumero(), $adr->getNumero());
-        $this->assertEquals($p->getRue(), $adr->getRue());
-        $this->assertEquals($p->getCodepostal(), $adr->getCodepostal());
-        $this->assertEquals($p->getVille(), $adr->getVille());
-        $this->assertEquals($p->getId(), $adr->getId());
+        $a = new Adresse(1, "Logebegoarem", 29380, "Bannalec");
+        $this->adresse->ajout($a);
+        $lastId = $this->pdodb->lastInsertId();
+        $a->setId($lastId);
+        $adr = $this->adresse->selectAdresse($a->getId());
+        $this->assertEquals($a->getNumero(), $adr->getNumero());
+        $this->assertEquals($a->getRue(), $adr->getRue());
+        $this->assertEquals($a->getCodepostal(), $adr->getCodepostal());
+        $this->assertEquals($a->getVille(), $adr->getVille());
+        $this->assertEquals($a->getId(), $adr->getId());
     }
 
     /**
@@ -170,19 +174,21 @@ class AdresseDBTest extends TestCase
 
         $this->adresse = new AdresseDB($this->pdodb);
         //insertion en bdd de l'enreg
-        $p = new Adresse(1, "Logebegoarem", 29380, "Bannalec");
+        $a = new Adresse(1, "Logebegoarem", 29380, "Bannalec");
         //insertion en bdd
-        $this->adresse->ajout($p);
+        $this->adresse->ajout($a);
         //update adr
+
         $lastId = $this->pdodb->lastInsertId();
-        $p->setId($lastId);
-        $this->adresse->update($p);
-        $adr = $this->adresse->selectAdresse($p->getId());
-        print_r(array($p,$adr));
-        $this->assertEquals($p->getNumero(), $adr->getNumero());
-        $this->assertEquals($p->getRue(), $adr->getRue());
-        $this->assertEquals($p->getCodepostal(), $adr->getCodepostal());
-        $this->assertEquals($p->getVille(), $adr->getVille());
-        $this->assertEquals($p->getId(), $adr->getId());
+        $a->setId($lastId);
+        $this->adresse->update($a);
+        $adr = $this->adresse->selectAdresse($a->getId());
+
+        print_r(array($a,$adr));
+        $this->assertEquals($a->getNumero(), $adr->getNumero());
+        $this->assertEquals($a->getRue(), $adr->getRue());
+        $this->assertEquals($a->getCodepostal(), $adr->getCodepostal());
+        $this->assertEquals($a->getVille(), $adr->getVille());
+        $this->assertEquals($a->getId(), $adr->getId());
     }
 }

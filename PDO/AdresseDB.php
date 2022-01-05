@@ -144,9 +144,9 @@ class AdresseDB
 		$obj=(object)$pdoAdres;
 		//print_r($obj);
 		//conversion de l'objet en objet adresse
-		$adr = new Adresse($obj->numero, $obj->rue, $obj->codepostal, $obj->ville);
+		$adr = new Adresse(intval($obj->numero), $obj->rue, intval($obj->codepostal), $obj->ville);
 		//affectation de l'id pers
-		$adr->setId($obj->id);
+		$adr->setId(intval($obj->id));
 			return $adr;
 	}
 }

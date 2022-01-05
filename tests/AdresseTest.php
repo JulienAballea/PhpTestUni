@@ -18,7 +18,8 @@ class AdresseTest extends TestCase {
      *  @coversNothing
      */
     protected function setUp() :void {
-        $this->adresse = new Adresse(3,4,"rue de saint honoré",44000,"Nantes");
+        $this->adresse = new Adresse(4,"rue de saint honoré",44000,"Nantes");
+        $this->adresse->setId(3);
     }
         /**
      *  @coversNothing
@@ -42,7 +43,7 @@ class AdresseTest extends TestCase {
      * @covers Adresse::getRue
      */
     public function testGetRue() {
-   
+
         $this->assertEquals("rue de saint honoré",$this->adresse->getRue());
     }
      /**
