@@ -25,7 +25,7 @@ class AdresseDB
 	public function ajout(Adresse $a)
 	{
 		//TODO insertion de l'adresse en bdd
-		$q = $this->db->prepare('INSERT INTO adresse(numero,rue,codepostal,ville) values(numero,rue,codepostal,ville)');
+		$q = $this->db->prepare('INSERT INTO adresse(numero,rue,codepostal,ville) values(:numero,:rue,:codepostal,:ville)');
 
 
 		$q->bindValue(':numero',$a->getNumero());
@@ -64,10 +64,10 @@ class AdresseDB
 			$q = $this->db->prepare('UPDATE adresse set numero=:n,rue=:r,codepostal=:c,ville=:v where id=:i');
 
 			$q->bindValue(':i', $a->getId());
-			$q->bindValue(':numero',$a->getNumero());
-			$q->bindValue(':rue',$a->getRue());
-			$q->bindValue(':codepostal',$a->getCodePostal());
-			$q->bindValue(':ville',$a->getVille());
+			$q->bindValue(':n',$a->getNumero());
+			$q->bindValue(':r',$a->getRue());
+			$q->bindValue(':c',$a->getCodePostal());
+			$q->bindValue(':v',$a->getVille());
 			$q->execute();
 			$q->closeCursor();
 			$q = NULL;
@@ -108,7 +108,7 @@ class AdresseDB
 	*/
 	public function selectAdresse($id){
 		//TODO selection de l'adresse
-		$query = 'SELECT numero,rue,codepostal,ville FROM adresse WHERE id=:id';
+		$query = 'SELECT * FROM adresse WHERE id=:id';
 		$q = $this->db->prepare($query);
 		$q->bindValue(':id', $id);
 		$q->execute();

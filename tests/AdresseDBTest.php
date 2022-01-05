@@ -55,15 +55,12 @@ class AdresseDBTest extends TestCase
     {
         try {
             $this->adresse = new AdresseDB($this->pdodb);
-            echo "test echo";
             $a = new Adresse(1, "Logebegoarem", 29380, "Bannalec");
             //insertion en bdd
-            echo "test a". $a;
             $this->adresse->ajout($a);
             $lastId = $this->pdodb->lastInsertId();
             $a->setId(intval($lastId)); echo "id adresse :". $a->getId();
             $adr = $this->adresse->selectAdresse($a->getId());
-            echo "test adresse";
             //echo "adr bdd: $adr";
             $this->assertEquals($a->getNumero(), $adr->getNumero());
             $this->assertEquals($a->getRue(), $adr->getRue());

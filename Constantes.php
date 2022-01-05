@@ -27,7 +27,10 @@
 	 const EXCEPTION_DB_PERS_UP="RECORD PERSONNE not update in DATABASE";
 	const EXCEPTION_DB_ADR_UP="RECORD ADRESSE not update in DATABASE";
 
-	 
+  //exception Pdo convertie
+  const EXCEPTION_DB_CONVERT_PERS = "RECORD PERSONNE can't be convert";
+  const EXCEPTION_DB_CONVERT_ADR = "RECORD ADRESS can't be convert";
+
      //connexion PDO
 	const STR_CONNEXION = "Constantes::TYPE.':host='.Constantes::HOST.';dbname='.Constantes::BASE";
     const ARR_EXTRA_PARAMETER ="array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'";
