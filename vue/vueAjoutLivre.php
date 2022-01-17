@@ -6,7 +6,7 @@ class vueAjoutLivre extends Vue {
         include "menu.php";
         echo '<div class="covered-img">';
         echo ' <div class="container">';
-       
+
         echo "<form method='post' action='index.php?action=validLivre&id=".$_SESSION['token']."required'>";
         echo " <div class='form-group'>";
         echo " <div class='form-row'>";
@@ -35,11 +35,8 @@ class vueAjoutLivre extends Vue {
         echo '</div>';
         echo '</div>';
         echo '</div>';
-
-
-
-
+				
 include "footer.html";
-        }	
-	
+        }
+
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 use PHPUnit\Framework\TestCase;
 require_once 'metier/Personne.php';
 
@@ -50,10 +50,10 @@ class PersonneTest extends TestCase
      */
     public function testGetId()
     {
-        
+
 
        $this->assertEquals(49, $this->personne->getId());
-      
+
     }
 
     /**
@@ -62,10 +62,10 @@ class PersonneTest extends TestCase
      */
     public function testGetNom()
     {
-      
+
 
         $this->assertEquals("Hollande", $this->personne->getNom());
-       
+
     }
 
     /**
@@ -74,13 +74,13 @@ class PersonneTest extends TestCase
      */
     public function testGetPrenom()
     {
-      
+
 
         $this->assertEquals("Francois", $this->personne->getPrenom());
     }
     public function testGetDatenaissance()
     {
-        
+
         $dateF='15/12/1950';
         $dateFR = DateTime::createFromFormat('d/m/Y', $dateF);
         $this->assertEquals($dateFR, $this->personne->getDatenaissance());
@@ -93,7 +93,7 @@ class PersonneTest extends TestCase
      */
     public function testGetTelephone()
     {
-   
+
 
     $this->assertEquals("0656463524", $this->personne->getTelephone());
     }
@@ -115,7 +115,7 @@ class PersonneTest extends TestCase
      */
     public function testGetLogin()
     {
-  
+
 
         $this->assertEquals("fhollande",$this->personne->getLogin());
     }
@@ -126,9 +126,20 @@ class PersonneTest extends TestCase
      */
     public function testGetPwd()
     {
-    
-        $this->personne->setPwd("monpwd"); 
+
+        $this->personne->setPwd("monpwd");
         $this->assertEquals(md5("monpwd"),$this->personne->getPwd());
+    }
+
+
+    /**
+     * Tests Personne->getAdresse()
+     * @covers Personne::getAdresse
+     */
+    public function testGetAdresse()
+    {
+        $this->personne->setAdresse(new Adresse(42,"Logebegoarem",29380, "Bannalec",10));
+        $this->assertEquals(new Adresse(42,"Logebegoarem",29380, "Bannalec",10), $this->personne->getAdresse());
     }
 
     /**
@@ -137,7 +148,7 @@ class PersonneTest extends TestCase
      */
     public function testSetId()
     {
-      
+
         $this->personne->setId(5);
         $this->assertEquals(5, (int)$this->personne->getId());
     }
@@ -148,7 +159,7 @@ class PersonneTest extends TestCase
      */
     public function testSetNom()
     {
-      
+
 
         $this->personne->setNom("Macron");
         $this->assertEquals("Macron", $this->personne->getNom());
@@ -164,7 +175,7 @@ class PersonneTest extends TestCase
         $this->assertEquals("Emmanuel", $this->personne->getPrenom());
     }
     /**
-     * 
+     *
      * @covers Personne::setDateNaissance
      */
     public function testSetDateNaissance()
@@ -173,10 +184,10 @@ class PersonneTest extends TestCase
         $dateFR = DateTime::createFromFormat('Y-m-d', $dateF);
         $this->personne->setDateNaissance($dateFR);
         $this->assertEquals($dateFR, $this->personne->getDatenaissance());
-      
+
     }
      /**
-     * 
+     *
      * @covers Personne::setTelephone
      */
     public function testSetTelephone()
@@ -188,10 +199,10 @@ class PersonneTest extends TestCase
     }
      /**
      * Tests Personne->setEmail()
-    
+
      * @covers Personne::setEmail
      */
- 
+
     public function testSetEmail()
     {
         $this->personne->setEmail("emacron@free.Fr");
@@ -202,10 +213,10 @@ class PersonneTest extends TestCase
      * Tests Personne->setLogin()
      * @covers Personne::setLogin
      */
-     
+
     public function testSetLogin()
     {
-      
+
         $this->personne->setLogin("emacron");
         $this->assertEquals("emacron", $this->personne->getLogin());
     }
@@ -216,9 +227,20 @@ class PersonneTest extends TestCase
      */
     public function testSetPwd()
     {
-    
+
         $this->personne->setPwd("brigitte");
         $this->assertEquals(md5("brigitte"), $this->personne->getPwd());
+    }
+
+    /**
+     * Tests Personne->setAdresse()
+     * @covers Personne::setAdresse
+     */
+    public function testSetAdresse()
+    {
+
+        $this->personne->setAdresse(new Adresse(42, "Logebegoarem", 29380, "Bannalec", 10));
+        $this->assertEquals(new Adresse(42, "Logebegoarem", 29380, "Bannalec", 10), $this->personne->getAdresse());
     }
 
     /**
@@ -227,12 +249,17 @@ class PersonneTest extends TestCase
      */
     public function test__toString()
     {
-        $this->assertEquals("[".$this->personne->getNom().",".$this->personne->getPrenom().",".$this->personne->getDatenaissance()->format('Y-m-d').",".$this->personne->getTelephone().",".$this->personne->getEmail().",".$this->personne->getLogin().",".$this->personne->getPwd()."]", $this->personne->__toString());
+        $this->assertEquals(
+            "[" . $this->personne->getNom()
+                . "," . $this->personne->getPrenom()
+                . "," . $this->personne->getDatenaissance()->format('Y-m-d')
+                . "," . $this->personne->getTelephone()
+                . "," . $this->personne->getEmail()
+                . "," . $this->personne->getLogin()
+                . "," . $this->personne->getPwd()
+                . "]",
+            $this->personne->__toString()
+        );
+      }
 
-    }
 }
-
-   
-
-
-

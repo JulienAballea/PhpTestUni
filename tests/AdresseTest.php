@@ -105,8 +105,14 @@ class AdresseTest extends TestCase {
      */
     public function test__toString()
     {
-        $this->assertEquals("[".$this->adresse->getId().",".$this->adresse->getNumero().",".$this->adresse->getRue().",".$this->adresse->getCodePostal().",".$this->adresse->getVille()."]", $this->adresse->__toString());
-        echo $this->adresse;
+        $this->assertEquals(
+          "[".$this->adresse->getId()
+          .",".$this->adresse->getNumero()
+          .",".$this->adresse->getRue()
+          .",".$this->adresse->getCodePostal()
+          .",".$this->adresse->getVille()
+          ."]",
+           $this->adresse->__toString());
     }
 
 }
